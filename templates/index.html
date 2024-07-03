@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Musicians Directory</title>
+</head>
+<body>
+    <h1>Musicians Directory</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Musician Name</th>
+                <th>Email</th>
+                <th>Album Rating</th>
+                <th>Instrument Type</th>
+                <th>Album Name</th>
+                <th>Release Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for musician in musicians %}
+                {% for album in musician.album_set.all %}
+                    <tr>
+                        <td>{{ musician.id }}</td>
+                        <td><a href="{% url 'musician_detail' musician.id %}">{{ musician.first_name }} {{ musician.last_name }}</a></td>
+                        <td>{{ musician.email }}</td>
+                        <td>{{ album.rating }}</td>
+                        <td>{{ musician.instrument_type }}</td>
+                        <td><a href="{% url 'album_detail' album.id %}">{{ album.name }}</a></td>
+                        <td>{{ album.release_date|date:"d-M-Y" }}</td>
+                        <td>
+                            <a href="{% url 'album_detail' album.id %}">Edit</a>
+                            <a href="{% url 'album_delete' album.id %}">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'musician_create' %}">Add Musician</a>
+    <a href="{% url 'album_create' %}">Add Album</a>
+</body>
