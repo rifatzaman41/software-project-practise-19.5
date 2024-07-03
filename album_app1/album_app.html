@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Album List</title>
+</head>
+<body>
+    <h1>Album List</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Album Name</th>
+                <th>Rating</th>
+                <th>Release Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for album in albums %}
+                <tr>
+                    <td>{{ album.id }}</td>
+                    <td><a href="{% url 'album_detail' album.id %}">{{ album.name }}</a></td>
+                    <td>{{ album.rating }}</td>
+                    <td>{{ album.release_date|date:"d-M-Y" }}</td>
+                    <td>
+                        <a href="{% url 'album_detail' album.id %}">Edit</a>
+                        <a href="{% url 'album_delete' album.id %}">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'album_create' %}">Add Album</a>
+</body>
+</html>
